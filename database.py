@@ -19,7 +19,7 @@ def createTable(db):
         videoID text primary key,
         YTChannelName text,
         date text,
-        videoStatus text
+        videoStatus NULL
         )""")
     conn.commit()
     conn.close()
@@ -40,7 +40,7 @@ def show_all_data(db):
     conn.close()
 
 #add a single record
-def add_record(videoID, YTChannelName, today=today, videoStatus=False):
+def add_record(videoID, YTChannelName, date=today, videoStatus=False):
     conn = sqlite3.connect(db)
     c = conn.cursor()
     c.execute(f"INSERT INTO {db} VALUES (?,?,?,?)", (videoID, YTChannelName, today, videoStatus, ))
@@ -115,7 +115,32 @@ def returnFalse(db):
     return output
 
 
-def updateData():
-    pass
-    #TODO have a function that recognises changes in the dataset compared with a list
+def updateData(boolValue, videoID):
+    conn = sqlite3.connect(db)
+    c = conn.cursor()
+
+    c.execute(f"""UPDATE {db} SET videoStatus = {bool(boolValue)}, date = (?)
+            WHERE videoID = (?)""", (today, videoID, ))
+    # c.execute(f"""UPDATE {db} SET date = (?)
+    #             WHERE videoID = (?)""", (today, videoID, ))
+    conn.commit()
+    conn.close()
+    print(f"{videoID} updated")
+
+def updateMany(data):
+    conn = sqlite3.connect(db)
+    c = conn.cursor()
+    for item in data:
+        c.execute(f"""UPDATE {db} SET videoStatus = TRUE, date = (?)
+                WHERE videoID = (?)""", (today, item, ))
+    conn.commit()
+    conn.close()
+    print(f"{data} updated")
+
+
+
+
+
+
+
 
