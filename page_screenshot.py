@@ -7,8 +7,7 @@ png = '.png'
 
 def selenium_out():
     #opens Chrome, maximises screen and saves file in current directory of script
-    browser = webdriver.Chrome(ChromeDriverManager().install())
-    # browser = webdriver.Chrome()
+    browser = webdriver.Chrome(ChromeDriverManager().install()) #this overwrites the need to update chromedriver
     browser.get(url)
     browser.maximize_window()
     time.sleep(3)
@@ -18,7 +17,7 @@ def selenium_out():
     browser.close()
 
 
-with open('C:\\Users\\j.attwood\\Documents\\Tasks\\RPU Targets\\Mostbet\\Saved Documents\\mirror_sites.csv') as csvfile:
+with open('path to csv file') as csvfile:
     #opens csv file, where list of URLs exist
     reader=csv.reader(csvfile)
 
